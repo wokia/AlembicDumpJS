@@ -28,6 +28,4 @@ notifications:
   channel: webgl
   on_build_success: true
   on_build_failure: true
-  template: "<{{buildUrl}}|Build {{projectName}} {{buildVersion}} {{status}}>
-Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}:
-{{commitMessage}}"
+  template: "<{{buildUrl}}|Build {{projectName}} {{buildVersion}} {{status}}> Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}"
