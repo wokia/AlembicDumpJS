@@ -1,0 +1,33 @@
+{
+    "version": "1.5.0-beta",
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "compileOnSave": false,
+    "filesGlob": [
+        "./**/*.ts",
+        "./**/*.tsx",
+        "!./node_modules/**/*"
+    ],
+    "files": [
+        "source/scripts/main.ts",
+        "spec/_browser-check.spec.ts",
+        "typings/jasmine/jasmine.d.ts",
+        "typings/karma-html2js-preprocessor/karma-html2js-preprocessor.d.ts",
+        "typings/karma-jasmine/karma-jasmine.d.ts",
+        "typings/tsd.d.ts"
+    ],
+    "exclude": []
+}

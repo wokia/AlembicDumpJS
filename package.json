@@ -1,0 +1,32 @@
+{
+  "name": "alembicdump.js",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wokia/AlembicDumpJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wokia/AlembicDumpJS/issues"
+  },
+  "homepage": "https://github.com/wokia/AlembicDumpJS#readme",
+  "devDependencies": {
+    "del": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-typescript": "^2.9.2",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.10",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-html2js-preprocessor": "^0.1.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.18",
+    "webpack-stream": "^2.1.1"
+  }
+}
