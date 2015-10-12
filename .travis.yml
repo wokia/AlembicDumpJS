@@ -7,7 +7,7 @@ addons:
   firefox: latest
 
 before_install:
-- npm install -g typescript bower webpack gulp karma-cli
+- npm install -g typescript webpack gulp karma-cli
 
 install:
 - npm install

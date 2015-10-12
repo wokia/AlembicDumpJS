@@ -35,13 +35,8 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: process.env.TRAVIS ? ['mocha'] : ['mocha'],
+    reporters: process.env.APPVEYOR ? ['appveyor'] : ['mocha'],
 
-    junitReporter: {
-      outputDir: '',
-      outputFile: undefined,
-      suite: ''
-    },
 
     // web server port
     port: 9876,
@@ -69,7 +64,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: process.env.TRAVIS ? ['ChromeForTravisCI', 'Firefox'] : ['PhantomJS'],
+    browsers: process.env.TRAVIS ? ['ChromeForTravisCI', 'Firefox'] : process.env.APPVEYOR ? ['Chrome', 'Firefox', 'IE'] : ['PhantomJS'],
 
 
     // Continuous Integration mode

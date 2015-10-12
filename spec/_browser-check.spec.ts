@@ -1,6 +1,6 @@
 /// <reference path="../typings/tsd.d.ts"/>
 
-describe('browser-check', function() {
+describe('browser future check', function() {
 	beforeAll(function() {
 		document.body.innerHTML = window.__html__['spec/_browser-check.spec.html'];
 	})
