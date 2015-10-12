@@ -35,8 +35,13 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: process.env.TRAVIS ? ['junit'] : ['progress'],
 
+    junitReporter: {
+      outputDir: '',
+      outputFile: undefined,
+      suite: ''
+    },
 
     // web server port
     port: 9876,
