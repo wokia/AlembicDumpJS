@@ -5,9 +5,6 @@ node_js:
 
 addons:
   firefox: latest
-  artifacts:
-    paths:
-      -./karma_html
 
 before_install:
 - npm install -g typescript webpack gulp karma-cli
