@@ -14,6 +14,7 @@ install:
   - node --version
   - npm --version
   - npm install -g typescript webpack gulp karma-cli
+  - npm cache clean
   - npm install
 
 build: off
