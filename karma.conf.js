@@ -36,7 +36,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: process.env.APPVEYOR ? ['appveyor'] : ['mocha'],
+    reporters: process.env.APPVEYOR ? ['appveyor', 'mocha'] : ['mocha'],
 
 
     // web server port

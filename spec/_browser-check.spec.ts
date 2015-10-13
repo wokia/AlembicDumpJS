@@ -13,15 +13,15 @@ describe('Browser feature Check', function() {
 	})
 })
 
-describe('File read test using XMHttpRequest', function() {
+describe('File read test using XMLHttpRequest', function() {
 	var request = new XMLHttpRequest();
 
 	beforeEach(function (done) {
 		request.responseType = 'blob';
 
-		request.onload = function () {
+		request.addEventListener('loadend', function () {
 			done();
-		}
+		});
 
 		request.open('GET', '/base/spec/assets/test.bin', true);
 		request.send();
