@@ -18,6 +18,7 @@ describe('File read test using XMLHttpRequest', function() {
 
 	beforeEach(function (done) {
 		request.responseType = 'blob';
+		request.withCredentials = true;
 
 		request.addEventListener('loadend', function () {
 			done();
