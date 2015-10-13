@@ -26,10 +26,18 @@ gulp.task('clean', function() {
 })
 
 gulp.task('test', ['compile-typescript', 'compile-spec-typescript'], function(done) {
+/*
 	new karma.Server({
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
 	}, done).start();
+*/
+	karma.server.start({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, function(exitCode) {
+		done();
+	})
 })
 
 gulp.task('default', ['build'])

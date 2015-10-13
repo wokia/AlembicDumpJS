@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: './',
 
 
     // frameworks to use
@@ -16,7 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         './out/spec/**/*.spec.js',
-        './spec/**/*.spec.html'
+        './spec/**/*.spec.html',
+        {pattern: __dirname + '/spec/assets/**/*', included: false, served: true},
     ],
 
 
@@ -64,7 +65,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: process.env.TRAVIS ? ['ChromeForTravisCI', 'Firefox'] : process.env.APPVEYOR ? ['Chrome', 'Firefox', 'IE'] : ['PhantomJS'],
+    browsers: process.env.TRAVIS ? ['ChromeForTravisCI', 'Firefox'] : process.env.APPVEYOR ? ['Chrome', 'Firefox', 'IE'] : ['PhantomJS2'],
 
 
     // Continuous Integration mode
