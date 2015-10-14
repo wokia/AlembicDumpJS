@@ -17,8 +17,8 @@ describe('File read test using XMLHttpRequest', function() {
 	var request = new XMLHttpRequest();
 
 	beforeEach(function (done) {
-		request.responseType = 'blob';
-		request.withCredentials = true;
+		request.responseType = 'arraybuffer';
+		request.withCredentials = false;
 
 		request.addEventListener('loadend', function () {
 			done();
@@ -30,9 +30,39 @@ describe('File read test using XMLHttpRequest', function() {
 
 	it('Read binary files?', function() {
 		expect(request.status).toBe(200);
-		expect(request.response).toEqual(jasmine.any(Blob));
+		expect(request.response).toEqual(jasmine.any(ArrayBuffer));
 
-		var blob = <Blob>request.response;
-		expect(blob.size).toBe(8);
+		var buffer = <ArrayBuffer>request.response;
+		expect(buffer.byteLength).toBe(8);
+	})
+})
+
+describe('Read the contents of the file using the DataView', function() {
+	var request = new XMLHttpRequest();
+
+	beforeEach(function (done) {
+		request.responseType = 'arraybuffer';
+		request.withCredentials = false;
+
+		request.addEventListener('loadend', function () {
+			done();
+		});
+
+		request.open('GET', '/base/spec/assets/test.bin', true);
+		request.send();
+	})
+
+	it('Contents of the file are read correctly?', function() {
+		var buffer = <ArrayBuffer>request.response;
+
+		var dataview = new DataView(buffer);
+		expect(dataview).not.toBeNull();
+		expect(dataview.byteLength).toEqual(buffer.byteLength);
+
+		var offset : number = 0;
+		['0', '1', '2', '3', '4', '5', '6', '7'].forEach(function(value) {
+			expect(dataview.getUint8(offset)).toEqual(value.charCodeAt(0));
+			offset += 1;
+		})
 	})
 })
