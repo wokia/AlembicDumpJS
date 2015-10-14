@@ -17,14 +17,14 @@ describe('File read test using XMLHttpRequest', function() {
 	var request = new XMLHttpRequest();
 
 	beforeEach(function (done) {
+		request.open('GET', '/base/spec/assets/test.bin', true);
+
 		request.responseType = 'arraybuffer';
-		request.withCredentials = false;
 
 		request.addEventListener('loadend', function () {
 			done();
 		});
 
-		request.open('GET', '/base/spec/assets/test.bin', true);
 		request.send();
 	})
 
@@ -41,14 +41,14 @@ describe('Read the contents of the file using the DataView', function() {
 	var request = new XMLHttpRequest();
 
 	beforeEach(function (done) {
+		request.open('GET', '/base/spec/assets/test.bin', true);
+
 		request.responseType = 'arraybuffer';
-		request.withCredentials = false;
 
 		request.addEventListener('loadend', function () {
 			done();
 		});
 
-		request.open('GET', '/base/spec/assets/test.bin', true);
 		request.send();
 	})
 
