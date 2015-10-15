@@ -1,8 +1,8 @@
 module alembic {
-	interface IArchive {
+	export interface IArchive {
 	};
 
-	class Factory {
+	export class Factory {
 		constructor() {
 		}
 

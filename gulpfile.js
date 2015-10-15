@@ -1,58 +1,40 @@
 var gulp = require('gulp');
 var typescript = require('gulp-typescript');
-var webpack = require('webpack-stream');
+var sourcemaps = require('gulp-sourcemaps');
 var karma = require('karma');
-var named = require('vinyl-named');
+var merge = require('merge2');
 var del = require('del');
 
-var typescriptConfig = require('./tsconfig.json');
+var tsLibProject = typescript.createProject('./tsconfig.json', {out: "alembic.js", declaration: true});
+var tsSpecProject = typescript.createProject('./tsconfig.json', {out: "alembic.spec.js"});
 
-gulp.task('compile-lib-typescript', function() {
-	return gulp.src(['./lib/**/*.ts'])
-	.pipe(typescript(typescriptConfig))
-	.js
-	.pipe(gulp.dest('./out/lib'))
-})
+gulp.task('compile-typescript', function() {
+	var tsLibResult = gulp.src(['./source/**/*.ts'])
+	.pipe(sourcemaps.init())
+	.pipe(typescript(tsLibProject))
 
-gulp.task('compile-app-typescript', function() {
-	return gulp.src(['./source/scripts/**/*.ts'])
-	.pipe(typescript(typescriptConfig))
-	.js
-	.pipe(gulp.dest('./out/scripts'))
+	return merge([
+		tsLibResult.dts.pipe(gulp.dest('./lib')),
+		tsLibResult.js.pipe(sourcemaps.write()).pipe(gulp.dest('./lib'))
+	])
 })
 
 gulp.task('compile-spec-typescript', function() {
-	return gulp.src(['./spec/**/*.spec.ts'])
-	.pipe(typescript(typescriptConfig))
+	return gulp.src(['./spec/**/*.spec.ts', './source/**/*.ts'])
+	.pipe(sourcemaps.init())
+	.pipe(typescript(tsSpecProject))
 	.js
-	.pipe(gulp.dest('./out/spec-unpack'))
-})
-
-gulp.task('compile-typescript', ['compile-lib-typescript', 'compile-app-typescript', 'compile-spec-typescript'])
-
-gulp.task('build-spec-scripts', ['compile-typescript'], function() {
-	return gulp.src(['./out/spec-unpack/**/*.spec.js'])
-	.pipe(named())
-	.pipe(webpack({
-		externals: [
-			'alembic',
-		],
-		resolve: {
-			alias: {
-				lib: __dirname + '/out/lib',
-			},
-		},
-	}))
+	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('./out/spec'))
 })
 
-gulp.task('build', ['compile-app-typescript'])
+gulp.task('build', ['compile-typescript'])
 
 gulp.task('clean', function() {
-	del(['out'])
+	del(['lib', 'out'])
 })
 
-gulp.task('test', ['build-spec-scripts'], function(done) {
+gulp.task('test', ['compile-spec-typescript'], function(done) {
 /*
 	new karma.Server({
 		configFile: __dirname + '/karma.conf.js',

@@ -1,36 +1,37 @@
 {
-  "name": "alembicdump.js",
+  "name": "alembic.js",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "gulp build",
     "test": "gulp test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wokia/AlembicDumpJS.git"
+    "url": "git+https://github.com/wokia/alembic.js.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wokia/AlembicDumpJS/issues"
+    "url": "https://github.com/wokia/alembic.js/issues"
   },
-  "homepage": "https://github.com/wokia/AlembicDumpJS#readme",
+  "homepage": "https://github.com/wokia/alembic.js#readme",
   "devDependencies": {
     "del": "^2.0.2",
     "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
     "gulp-typescript": "^2.9.2",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.10",
     "karma-appveyor-reporter": "^0.3.0",
     "karma-chrome-launcher": "^0.2.1",
     "karma-firefox-launcher": "^0.1.6",
-    "karma-html2js-preprocessor": "^0.1.0",
     "karma-ie-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
     "karma-mocha-reporter": "^1.1.1",
     "karma-phantomjs2-launcher": "^0.3.2",
-    "vinyl-named": "^1.1.0",
-    "webpack-stream": "^2.1.1"
+    "karma-sourcemap-loader": "^0.3.6",
+    "merge2": "^0.3.6"
   }
 }

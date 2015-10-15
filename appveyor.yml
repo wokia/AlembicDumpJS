@@ -13,13 +13,14 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - node --version
   - npm --version
-  - npm install -g typescript webpack gulp karma-cli
+  - npm install -g typescript gulp karma-cli
   - npm cache clean
   - npm install
 
 build: off
 
 test_script:
+  - npm run build
   - npm test
 
 notifications:
