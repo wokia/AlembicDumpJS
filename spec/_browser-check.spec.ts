@@ -20,7 +20,6 @@ describe('File read test using XMLHttpRequest', function() {
 		request.open('GET', '/base/spec/assets/test.bin', true);
 
 		request.responseType = 'arraybuffer';
-
 		request.addEventListener('loadend', function () {
 			done();
 		});

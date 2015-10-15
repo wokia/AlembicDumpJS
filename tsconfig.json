@@ -1,7 +1,7 @@
 {
     "version": "1.5.0-beta",
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
         "isolatedModules": false,
@@ -14,21 +14,27 @@
         "noLib": false,
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": true,
+        "rootDir": ".",
         "sourceMap": true
     },
     "compileOnSave": false,
     "filesGlob": [
+        "./typings/**/*.d.ts",
         "./**/*.ts",
         "./**/*.tsx",
         "!./node_modules/**/*"
     ],
     "files": [
-        "source/scripts/main.ts",
-        "spec/_browser-check.spec.ts",
         "typings/jasmine/jasmine.d.ts",
         "typings/karma-html2js-preprocessor/karma-html2js-preprocessor.d.ts",
         "typings/karma-jasmine/karma-jasmine.d.ts",
-        "typings/tsd.d.ts"
+        "typings/tsd.d.ts",
+        "typings/webpack/webpack.d.ts",
+        "lib/alembic.ts",
+        "lib/alembic/Factory.ts",
+        "source/scripts/main.ts",
+        "spec/_browser-check.spec.ts",
+        "spec/alembic-core.spec.ts"
     ],
     "exclude": []
 }
