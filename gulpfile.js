@@ -1,9 +1,11 @@
 var gulp = require('gulp');
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
+var uglify = require("gulp-uglify");
 var karma = require('karma');
 var merge = require('merge2');
 var del = require('del');
+var rename = require('gulp-rename');
 
 var tsLibProject = typescript.createProject('./tsconfig.json', {out: "alembic.js", declaration: true});
 var tsSpecProject = typescript.createProject('./tsconfig.json', {out: "alembic.spec.js"});
@@ -28,7 +30,14 @@ gulp.task('compile-spec-typescript', function() {
 	.pipe(gulp.dest('./out/spec'))
 })
 
-gulp.task('build', ['compile-typescript'])
+gulp.task('build', ['compile-typescript'], function() {
+	return gulp.src(['./lib/alembic.js'])
+	.pipe(uglify({
+		preserveComments: 'some'
+	}))
+	.pipe(rename('alembic.min.js'))
+	.pipe(gulp.dest('./lib'))
+})
 
 gulp.task('clean', function() {
 	del(['lib', 'out'])
