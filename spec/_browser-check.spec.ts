@@ -16,7 +16,7 @@ describe('Browser feature Check', function() {
 describe('File read test using XMLHttpRequest', function() {
 	var request = new XMLHttpRequest();
 
-	beforeEach(function (done) {
+	beforeAll(function (done) {
 		request.open('GET', '/base/spec/assets/test.bin', true);
 
 		request.responseType = 'arraybuffer';

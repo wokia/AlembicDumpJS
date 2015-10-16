@@ -19,8 +19,10 @@
         "typings/karma-jasmine/karma-jasmine.d.ts",
         "typings/tsd.d.ts",
         "source/Factory.ts",
+        "source/IArchive.ts",
         "spec/_browser-check.spec.ts",
-        "spec/alembic-core.spec.ts"
+        "spec/alembic-core.spec.ts",
+        "spec/alembic-factory.spec.ts"
     ],
     "exclude": []
 }

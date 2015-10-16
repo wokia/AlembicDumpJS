@@ -1,13 +1,12 @@
 module alembic {
-	export interface IArchive {
-	};
 
 	export class Factory {
 		constructor() {
 		}
 
 		getArchive(buffer : ArrayBuffer): IArchive {
-			return null;
+			var archive = new alembic.unknown.Archive();
+			return archive;
 		}
 	};
 }
