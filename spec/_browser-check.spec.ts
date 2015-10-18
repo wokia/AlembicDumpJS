@@ -59,8 +59,8 @@ describe('Read the contents of the file using the DataView', function() {
 		expect(dataview.byteLength).toEqual(buffer.byteLength);
 
 		var offset : number = 0;
-		['0', '1', '2', '3', '4', '5', '6', '7'].forEach(function(value) {
-			expect(dataview.getUint8(offset)).toEqual(value.charCodeAt(0));
+		[0, 1, 2, 3, 4, 5, 6, 7].forEach(function(value) {
+			expect(dataview.getUint8(offset)).toEqual(value);
 			offset += 1;
 		})
 	})
