@@ -4,8 +4,8 @@ module alembic {
 		constructor() {
 		}
 
-		getArchive(filename:string, buffer:ArrayBuffer): IArchive {
-			var archiveHDF5 = new alembic.hdf5.Archive(filename, buffer);
+		getArchive(buffer:ArrayBuffer, filename:string = ''): IArchive {
+			var archiveHDF5 = new alembic.hdf5.Archive(buffer, filename);
 			if (archiveHDF5.valid()) {
 				return archiveHDF5;
 			}

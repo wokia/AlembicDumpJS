@@ -9,11 +9,24 @@ describe('alembic/Factory', function() {
 		var factory = new alembic.Factory();
 		expect(factory).not.toBeNull();
 	})
+
+	it("Once you pass an invalid parameter 'Unknown Archive' is returned", function() {
+		let array = new Uint8Array(1024);
+		for (let cnt=0; cnt<array.length; ++cnt) { array[cnt] = 0; }
+		let buffer = array.buffer;
+
+		var factory = new alembic.Factory();
+		expect(factory).not.toBeNull();
+
+		var archive = factory.getArchive(buffer);
+		expect(archive).not.toBeNull();
+		expect(archive.getCoreType()).toBe(alembic.Factory.CoreType.Unknown);
+	})
 })
 
 describe('alembic/Factory', function() {
-	var request = new XMLHttpRequest();
-	var filename = '/base/spec/assets/Alembic_Octopus_Example/alembic_octopus.abc';
+	let request = new XMLHttpRequest();
+	let filename = '/base/spec/assets/Alembic_Octopus_Example/alembic_octopus.abc';
 
 	beforeAll(function (done) {
 		request.open('GET', filename, true);
@@ -49,8 +62,9 @@ describe('alembic/Factory', function() {
 		var factory = new alembic.Factory();
 		expect(factory).not.toBeNull();
 
-		var archive = factory.getArchive(filename, buffer);
+		var archive = factory.getArchive(buffer, filename);
 		expect(archive).not.toBeNull();
-		//expect(archive.valid()).toBeTruthy();
+		expect(archive.getCoreType()).toBe(alembic.Factory.CoreType.HDF5);
+		expect(archive.valid()).toBeTruthy();
 	})
 })
