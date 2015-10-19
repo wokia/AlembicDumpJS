@@ -58,14 +58,16 @@ describe('alembic/Factory', function() {
 		})
 
 		// Super Block Version 2 のみ対象
+		var dispAddress = (lower:number, upper:number) => {return '' + upper.toString(16) + ', ' + lower.toString(16)};
+
 		expect(stream.getUint8()).toBe(2);
-		//console.log('Size of Offsets : ' + stream.getUint8());
-		//console.log('Size of Lengths : ' + stream.getUint8());
-		//console.log('File Consistency Flags : ' + stream.getUint8());
-		//console.log('Base Address : ' + stream.getUint32());
-		//console.log('Superblock Extension Address : ' + stream.getUint32());
-		//console.log('End of File Address : ' + stream.getUint32());
-		//console.log('Root Group Object Header Address : ' + stream.getUint32());
+		//console.log('Size of Offsets : ' + stream.getUint8().toString(16));
+		//console.log('Size of Lengths : ' + stream.getUint8().toString(16));
+		//console.log('File Consistency Flags : ' + stream.getUint8().toString(16));
+		//console.log('Base Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
+		//console.log('Superblock Extension Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
+		//console.log('End of File Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
+		//console.log('Root Group Object Header Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
 		//console.log('Superblock Checksum : ' + stream.getUint32());
 	})
 
