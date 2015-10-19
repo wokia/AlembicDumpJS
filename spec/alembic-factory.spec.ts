@@ -47,12 +47,21 @@ describe('alembic/Factory', function() {
 		// Unit Test 環境では、2 bytes offset して、3 byte 目を無視する.
 		// http://qiita.com/wokia/items/4c6e3942d5cdaa3b97b4
 		var offset = (environment.isLocalTesting())? 2 : 0;
-		var stream = new DataViewStream(buffer, offset);
+		var stream = new DataViewStream(buffer, DataViewStream.Endian.Little, offset);
 		[0x89, 0x48, 0x44, 0x46, 0x0d, 0x0a, 0x1a, 0x0a].forEach(function(value) {
-			if ((!environment.isLocalTesting())&&(stream.getPosition() != 0)) {
+			if ((environment.isLocalTesting())&&(stream.getPosition() == 0)) {
+				stream.getUint8();
+			}
+			else {
 				expect(stream.getUint8()).toEqual(value);
 			}
 		})
+
+		// Super Block Version 2 のみ対象
+		expect(stream.getUint8()).toBe(2);
+		//console.log('Size of Offsets :' + stream.getUint8());
+		//console.log('Size of Lengths :' + stream.getUint8());
+		//console.log('File Consistency Flags :' + stream.getUint8());
 	})
 
 	it('Archive can be getted from alembic_octopus.abc?', function() {
