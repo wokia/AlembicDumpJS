@@ -1,6 +1,6 @@
 /// <reference path="../typings/tsd.d.ts"/>
 
-describe('utility/DataViewOffset', function() {
+describe('utility/DataViewStream', function() {
 	interface IArray {
 		[index:number]:number;
 		length:number;
@@ -26,8 +26,9 @@ describe('utility/DataViewOffset', function() {
 	})
 
 	it('Correctly it can be created?', function() {
-		let byteLength = 32;
-		let buffer = genereateArrayBuffer(new Uint8Array(byteLength/Int8Array.BYTES_PER_ELEMENT), (index:number) => { return index })
+		let length = 16;
+		let byteLength = (length * Uint8Array.BYTES_PER_ELEMENT);
+		let buffer = genereateArrayBuffer(new Uint8Array(length), (index:number) => { return index })
 
 		{
 			let stream = new DataViewStream(buffer);
@@ -53,26 +54,50 @@ describe('utility/DataViewOffset', function() {
 	})
 
 	it('getInt8()', function() {
-		let byteLength = 32;
-		let length = byteLength/Int8Array.BYTES_PER_ELEMENT;
-		let buffer = genereateArrayBuffer(new Int8Array(length), (index:number) => {return index*-1})
+		let length = 16;
+		let buffer = genereateArrayBuffer(new Int8Array(length), (index:number) => {return (index+16)*-1})
+		expect(buffer.byteLength).toBe(length * Int8Array.BYTES_PER_ELEMENT);
 
-		let stream = new DataViewStream(buffer);
+		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getInt8()).toBe(cnt*-1);
-			expect(stream.getPosition()).toBe(cnt+Int8Array.BYTES_PER_ELEMENT);
+			expect(stream.getInt8()).toBe((cnt+16)*-1);
+			expect(stream.getPosition()).toBe((cnt+1)*Int8Array.BYTES_PER_ELEMENT);
 		}
 	})
 
 	it('getUint8()', function() {
-		let byteLength = 32;
-		let length = byteLength/Uint8Array.BYTES_PER_ELEMENT;
-		let buffer = genereateArrayBuffer(new Uint8Array(length), (index:number) => {return index})
+		let length = 16;
+		let buffer = genereateArrayBuffer(new Uint8Array(length), (index:number) => {return index+128})
+		expect(buffer.byteLength).toBe(length * Uint8Array.BYTES_PER_ELEMENT);
 
-		let stream = new DataViewStream(buffer);
+		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getInt8()).toBe(cnt);
-			expect(stream.getPosition()).toBe(cnt+Uint8Array.BYTES_PER_ELEMENT);
+			expect(stream.getUint8()).toBe(cnt+128);
+			expect(stream.getPosition()).toBe((cnt+1)*Uint8Array.BYTES_PER_ELEMENT);
+		}
+	})
+
+	it('getInt16()', function() {
+		let length = 16;
+		let buffer = genereateArrayBuffer(new Int16Array(length), (index:number) => {return (index+16)*-1})
+		expect(buffer.byteLength).toBe(length * Int16Array.BYTES_PER_ELEMENT);
+
+		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
+		for (let cnt=0; cnt<length; ++cnt) {
+			expect(stream.getInt16()).toBe((cnt+16)*-1);
+			expect(stream.getPosition()).toBe((cnt+1)*Int16Array.BYTES_PER_ELEMENT);
+		}
+	})
+
+	it('getUint16()', function() {
+		let length = 16;
+		let buffer = genereateArrayBuffer(new Uint16Array(length), (index:number) => {return index+32768})
+		expect(buffer.byteLength).toBe(length * Uint16Array.BYTES_PER_ELEMENT);
+
+		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
+		for (let cnt=0; cnt<length; ++cnt) {
+			expect(stream.getUint16()).toBe(cnt+32768);
+			expect(stream.getPosition()).toBe((cnt+1)*Uint16Array.BYTES_PER_ELEMENT);
 		}
 	})
 })
