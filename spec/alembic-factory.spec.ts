@@ -59,9 +59,14 @@ describe('alembic/Factory', function() {
 
 		// Super Block Version 2 のみ対象
 		expect(stream.getUint8()).toBe(2);
-		//console.log('Size of Offsets :' + stream.getUint8());
-		//console.log('Size of Lengths :' + stream.getUint8());
-		//console.log('File Consistency Flags :' + stream.getUint8());
+		//console.log('Size of Offsets : ' + stream.getUint8());
+		//console.log('Size of Lengths : ' + stream.getUint8());
+		//console.log('File Consistency Flags : ' + stream.getUint8());
+		//console.log('Base Address : ' + stream.getUint32());
+		//console.log('Superblock Extension Address : ' + stream.getUint32());
+		//console.log('End of File Address : ' + stream.getUint32());
+		//console.log('Root Group Object Header Address : ' + stream.getUint32());
+		//console.log('Superblock Checksum : ' + stream.getUint32());
 	})
 
 	it('Archive can be getted from alembic_octopus.abc?', function() {
