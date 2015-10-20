@@ -22,12 +22,10 @@
         "source/hdf5/Archive.ts",
         "source/IArchive.ts",
         "source/utility/DataViewStream.ts",
-        "source/utility/Environment.ts",
         "spec/_browser-check.spec.ts",
         "spec/alembic-core.spec.ts",
         "spec/alembic-factory.spec.ts",
-        "spec/dataviewstream.spec.ts",
-        "spec/environment.spec.ts"
+        "spec/dataviewstream.spec.ts"
     ],
     "exclude": [
         "lib/**/*"
