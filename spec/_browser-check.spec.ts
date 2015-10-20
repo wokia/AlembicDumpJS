@@ -17,7 +17,7 @@ describe('File read test using XMLHttpRequest', function() {
 	var request = new XMLHttpRequest();
 
 	beforeAll(function (done) {
-		request.open('GET', '/base/spec/assets/test.bin', true);
+		request.open('GET', 'http://localhost:8000/assets/test.bin', true);
 
 		request.responseType = 'arraybuffer';
 		request.addEventListener('loadend', function () {
@@ -40,7 +40,7 @@ describe('Read the contents of the file using the DataView', function() {
 	var request = new XMLHttpRequest();
 
 	beforeEach(function (done) {
-		request.open('GET', '/base/spec/assets/test.bin', true);
+		request.open('GET', 'http://localhost:8000/assets/test.bin', true);
 
 		request.responseType = 'arraybuffer';
 

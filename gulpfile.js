@@ -1,7 +1,9 @@
 var gulp = require('gulp');
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
-var uglify = require("gulp-uglify");
+var uglify = require('gulp-uglify');
+var connect = require('gulp-connect');
+var cors = require('cors');
 var karma = require('karma');
 var merge = require('merge2');
 var del = require('del');
@@ -50,10 +52,19 @@ gulp.task('test', ['compile-spec-typescript'], function(done) {
 		singleRun: true
 	}, done).start();
 */
+	connect.server({
+		root: 'spec',
+		port: 8000,
+		middleware: function() {
+			return [cors()];
+		}
+	});
+
 	karma.server.start({
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
 	}, function(exitCode) {
+		connect.serverClose();
 		done();
 	})
 })
