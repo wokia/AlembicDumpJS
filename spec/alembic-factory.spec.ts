@@ -44,25 +44,13 @@ describe('alembic/Factory', function() {
 		var buffer = <ArrayBuffer>request.response;
 		expect(buffer).not.toBeNull();
 
-		// Unit Test 環境では、2 bytes offset して、3 byte 目を無視する.
-		// http://qiita.com/wokia/items/4c6e3942d5cdaa3b97b4
 		var stream = new DataViewStream(buffer, DataViewStream.Endian.Little);
 		[0x89, 0x48, 0x44, 0x46, 0x0d, 0x0a, 0x1a, 0x0a].forEach(function(value) {
 			expect(stream.getUint8()).toEqual(value);
 		})
 
 		// Super Block Version 2 のみ対象
-		var dispAddress = (lower:number, upper:number) => {return '' + upper.toString(16) + ', ' + lower.toString(16)};
-
 		expect(stream.getUint8()).toBe(2);
-		//console.log('Size of Offsets : ' + stream.getUint8().toString(16));
-		//console.log('Size of Lengths : ' + stream.getUint8().toString(16));
-		//console.log('File Consistency Flags : ' + stream.getUint8().toString(16));
-		//console.log('Base Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
-		//console.log('Superblock Extension Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
-		//console.log('End of File Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
-		//console.log('Root Group Object Header Address : ' + dispAddress(stream.getUint32(), stream.getUint32()));
-		//console.log('Superblock Checksum : ' + stream.getUint32());
 	})
 
 	it('Archive can be getted from alembic_octopus.abc?', function() {
