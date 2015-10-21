@@ -1,33 +1,30 @@
 module alembic {
 	export module hdf5 {
 
-		export class File {
-			buffer:ArrayBuffer = null;
-			sizeOfOffsets:number = 0;
-			sizeOfLengths:number = 0;
-			fileConsistencyFlags:number = 0;
+		export const ENDIANNESS = DataViewStream.Endian.Little;
+		export const SUPERBLOCK_SIGNETURE = new Uint8Array([0x89, 0x48, 0x44, 0x46, 0x0d, 0x0a, 0x1a, 0x0a]);
+		export const DATAOBJECT_HEADER_SIGNETURE = new Uint8Array([0x4f, 0x48, 0x44, 0x52]);
 
-			baseAddres:number = 0;
-			superBlockExtensionAddress:number = 0;
-			endOfFileAddress:number = 0;
-			rootGroupObjectHeaderAddress:number = 0;
+		export class Group {
+			flags:number = 0;
+
+			buffer:ArrayBuffer = null;
 
 			constructor(buffer:ArrayBuffer) {
-				if (!File.isSupportedFormat(buffer)) {
+				if (!File.matchSigneture(buffer, 0, DATAOBJECT_HEADER_SIGNETURE)) {
 					return ;
 				}
 
-				// SIGNETURE と Super Block Version を読み飛ばす.
-				var stream = new DataViewStream(buffer, File.ENDIANNESS, File.SIGNETURE.length+1);
+				// SIGNETURE を読み飛ばす.
+				var stream = new DataViewStream(buffer, ENDIANNESS, DATAOBJECT_HEADER_SIGNETURE.length);
 
-				this.sizeOfOffsets = stream.getUint8();
-				this.sizeOfLengths = stream.getUint8();
-				this.fileConsistencyFlags = stream.getUint8();
+				var version = stream.getUint8();
+				if (version != 2) {
+					return ;
+				}
 
-				this.baseAddres = File.getUint64Address(stream);
-				this.superBlockExtensionAddress = File.getUint64Address(stream);
-				this.endOfFileAddress = File.getUint64Address(stream);
-				this.rootGroupObjectHeaderAddress = File.getUint64Address(stream);
+				this.flags = stream.getUint8();
+				stream.skipBytes(2);
 
 				this.buffer = buffer;
 			}
@@ -37,26 +34,67 @@ module alembic {
 			}
 		}
 
+		export class File {
+			sizeOfOffsets:number = 0;
+			sizeOfLengths:number = 0;
+			fileConsistencyFlags:number = 0;
+
+			baseAddres:number = 0;
+			superBlockExtensionAddress:number = 0;
+			endOfFileAddress:number = 0;
+
+			buffer:ArrayBuffer = null;
+			rootGroup:Group = null;
+
+			constructor(buffer:ArrayBuffer) {
+				if (!File.matchSigneture(buffer, 0, SUPERBLOCK_SIGNETURE)) {
+					return ;
+				}
+
+				// SIGNETURE を読み飛ばす.
+				var stream = new DataViewStream(buffer, ENDIANNESS, SUPERBLOCK_SIGNETURE.length);
+
+				var superBlockVersion = stream.getUint8();
+				if (superBlockVersion != 2) {
+					return ;
+				}
+
+				this.sizeOfOffsets = stream.getUint8();
+				this.sizeOfLengths = stream.getUint8();
+				this.fileConsistencyFlags = stream.getUint8();
+
+				this.baseAddres = File.getUint64Address(stream);
+				this.superBlockExtensionAddress = File.getUint64Address(stream);
+				this.endOfFileAddress = File.getUint64Address(stream);
+
+				var rootGroupObjectHeaderAddress = File.getUint64Address(stream);
+				var checksum = stream.getUint32();
+
+				var rootGroup = new Group(buffer.slice(rootGroupObjectHeaderAddress));
+				if (!rootGroup.valid()) {
+					return ;
+				}
+
+				this.buffer = buffer;
+				this.rootGroup = rootGroup;
+			}
+
+			valid(): boolean {
+				return ((this.buffer != null)&&(this.rootGroup != null));
+			}
+		}
+
 		export module File {
-			export const SIGNETURE = new Uint8Array([0x89, 0x48, 0x44, 0x46, 0x0d, 0x0a, 0x1a, 0x0a]);
-			export const ENDIANNESS = DataViewStream.Endian.Little;
-
-			export function isSupportedFormat(buffer:ArrayBuffer): boolean {
-				var header = new Uint8Array(buffer, 0, SIGNETURE.length);
-
-				if (SIGNETURE.length != header.length) {
+			export function matchSigneture(buffer:ArrayBuffer, offset:number, signeture:Uint8Array) {
+				var array = new Uint8Array(buffer, offset, signeture.length);
+				if (signeture.length != array.length) {
 					return false;
 				}
 
-				for (let cnt=0; cnt<SIGNETURE.length; ++cnt) {
-					if (SIGNETURE[cnt] != header[cnt]) {
+				for (let cnt=0; cnt<signeture.length; ++cnt) {
+					if (signeture[cnt] != array[cnt]) {
 						return false;
 					}
-				}
-
-				var superBlockVersion = (new Uint8Array(buffer, SIGNETURE.length))[0];
-				if (superBlockVersion != 2) {
-					return false;
 				}
 
 				return true;
