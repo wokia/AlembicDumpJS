@@ -25,6 +25,10 @@ class DataViewStream {
 		return this.position;
 	}
 
+	skipBytes(bytes:number) {
+		this.position = Math.min((this.position + bytes), this.dataview.byteLength);
+	}
+
 	getEndianness():DataViewStream.Endian {
 		return (this.littleEndian)? DataViewStream.Endian.Little : DataViewStream.Endian.Big;
 	}

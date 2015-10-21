@@ -55,6 +55,19 @@ describe('utility/DataViewStream', function() {
 		}
 	})
 
+	it('skipBytes()', function() {
+		var length = 16;
+		var genValue = (index:number) => {return index};
+		var buffer = generateArrayBuffer(new Uint8Array(length), genValue)
+
+		var stream = new DataViewStream(buffer, DataViewStream.Endian.Big, 0);
+		expect(stream.getPosition()).toBe(0);
+		stream.skipBytes(4);
+		expect(stream.getPosition()).toBe(4);
+		stream.skipBytes(256);
+		expect(stream.getPosition()).toBe(length);
+	})
+
 	it('getInt8()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+1)*-1};
