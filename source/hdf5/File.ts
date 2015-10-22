@@ -28,5 +28,9 @@ module hdf5 {
 				&&(this.superblock != null)
 				&&(this.rootGroup != null));
 		}
+
+		getRootGroup():Group {
+			return this.rootGroup;
+		}
 	}
 }

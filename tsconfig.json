@@ -23,7 +23,6 @@
         "source/hdf5/DataObjectHeader.ts",
         "source/hdf5/File.ts",
         "source/hdf5/Group.ts",
-        "source/hdf5/hdf5.ts",
         "source/hdf5/SuperBlock.ts",
         "source/hdf5/Utility.ts",
         "source/IArchive.ts",
@@ -31,7 +30,8 @@
         "spec/_browser-check.spec.ts",
         "spec/alembic-core.spec.ts",
         "spec/alembic-factory.spec.ts",
-        "spec/dataviewstream.spec.ts"
+        "spec/dataviewstream.spec.ts",
+        "spec/hdf5-file.spec.ts"
     ],
     "exclude": [
         "lib/**/*"
