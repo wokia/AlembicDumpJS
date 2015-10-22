@@ -5,7 +5,7 @@ module alembic {
 		}
 
 		getArchive(buffer:ArrayBuffer, filename:string = ''): IArchive {
-			var archiveHDF5 = new alembic.hdf5.Archive(buffer, filename);
+			var archiveHDF5 = new alembic.abchdf5.Archive(buffer, filename);
 			if (archiveHDF5.valid()) {
 				return archiveHDF5;
 			}
