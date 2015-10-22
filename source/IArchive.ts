@@ -6,7 +6,7 @@ module alembic {
 	};
 
 
-	export module unknown {
+	export module abcunknown {
 
 		export class Archive implements alembic.IArchive {
 

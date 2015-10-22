@@ -10,7 +10,7 @@ module alembic {
 				return archiveHDF5;
 			}
 
-			return new alembic.unknown.Archive();
+			return new alembic.abcunknown.Archive();
 		}
 	};
 
