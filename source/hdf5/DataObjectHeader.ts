@@ -1,7 +1,9 @@
 module hdf5 {
 
 	export class DataObjectHeader {
+		size:number = 0;
 		flags:number = 0;
+		sizeOfChunk:number = 0;
 
 		buffer:ArrayBuffer = null;
 		bufferOfChunk:ArrayBuffer = null;
@@ -44,6 +46,14 @@ module hdf5 {
 
 		valid(): boolean {
 			return ((this.buffer != null)&&(this.bufferOfChunk != null));
+		}
+
+		getChunk():ArrayBuffer {
+			return this.bufferOfChunk;
+		}
+
+		isAttributeCreationTracked():boolean {
+			return ((this.flags & DataObjectHeader.Flag.TrackedAttributeCreationOrder)!= 0);
 		}
 	}
 

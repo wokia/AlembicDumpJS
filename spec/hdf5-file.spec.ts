@@ -47,5 +47,9 @@ describe('hdf5/File', function() {
 			expect(rootnode).not.toBeNull();
 			expect(rootnode.valid()).toBeTruthy();
 		})
+
+		it('Get "abc_version" attribute from RootNode group.', function() {
+			var rootnode = file.getRootGroup();
+		})
 	})
 })

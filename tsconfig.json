@@ -23,6 +23,7 @@
         "source/hdf5/DataObjectHeader.ts",
         "source/hdf5/File.ts",
         "source/hdf5/Group.ts",
+        "source/hdf5/Message.ts",
         "source/hdf5/SuperBlock.ts",
         "source/hdf5/Utility.ts",
         "source/IArchive.ts",
