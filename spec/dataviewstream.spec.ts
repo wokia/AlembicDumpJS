@@ -1,20 +1,6 @@
 /// <reference path="../typings/tsd.d.ts"/>
 
 describe('utility/DataViewStream', function() {
-	interface IArray {
-		[index:number]:number;
-		length:number;
-		buffer:ArrayBuffer;
-	}
-
-	interface valueFromIndex {(index:number): number}
-
-	function generateArrayBuffer<T extends IArray>(array:T, callback:valueFromIndex) {
-		for (let cnt=0; cnt<array.length; ++cnt) {
-			array[cnt] = callback(cnt);
-		}
-		return array.buffer;
-	}
 
 	it('DataViewStream Defined?', function() {
 		expect(DataViewStream).toBeDefined();
@@ -28,7 +14,7 @@ describe('utility/DataViewStream', function() {
 	it('Correctly it can be created?', function() {
 		let length = 16;
 		let byteLength = (length * Uint8Array.BYTES_PER_ELEMENT);
-		let buffer = generateArrayBuffer(new Uint8Array(length), (index:number) => { return index })
+		let buffer = ArrayBufferUtil.Generate(new Uint8Array(length), (index:number) => { return index })
 
 		{
 			let stream = new DataViewStream(buffer);
@@ -58,7 +44,7 @@ describe('utility/DataViewStream', function() {
 	it('skipBytes()', function() {
 		var length = 16;
 		var genValue = (index:number) => {return index};
-		var buffer = generateArrayBuffer(new Uint8Array(length), genValue)
+		var buffer = ArrayBufferUtil.Generate(new Uint8Array(length), genValue)
 
 		var stream = new DataViewStream(buffer, DataViewStream.Endian.Big, 0);
 		expect(stream.getPosition()).toBe(0);
@@ -71,7 +57,7 @@ describe('utility/DataViewStream', function() {
 	it('getInt8()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+1)*-1};
-		let buffer = generateArrayBuffer(new Int8Array(length), genValue)
+		let buffer = ArrayBufferUtil.Generate(new Int8Array(length), genValue)
 		expect(buffer.byteLength).toBe(length * Int8Array.BYTES_PER_ELEMENT);
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
@@ -84,7 +70,7 @@ describe('utility/DataViewStream', function() {
 	it('getUint8()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return index+128};
-		let buffer = generateArrayBuffer(new Uint8Array(length), genValue)
+		let buffer = ArrayBufferUtil.Generate(new Uint8Array(length), genValue)
 		expect(buffer.byteLength).toBe(length * Uint8Array.BYTES_PER_ELEMENT);
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
@@ -97,7 +83,7 @@ describe('utility/DataViewStream', function() {
 	it('getInt16()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+256)*-1};
-		let buffer = generateArrayBuffer(new Int16Array(length), genValue)
+		let buffer = ArrayBufferUtil.Generate(new Int16Array(length), genValue)
 		expect(buffer.byteLength).toBe(length * Int16Array.BYTES_PER_ELEMENT);
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
@@ -110,7 +96,7 @@ describe('utility/DataViewStream', function() {
 	it('getUint16()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return index+32768};
-		let buffer = generateArrayBuffer(new Uint16Array(length), genValue)
+		let buffer = ArrayBufferUtil.Generate(new Uint16Array(length), genValue)
 		expect(buffer.byteLength).toBe(length * Uint16Array.BYTES_PER_ELEMENT);
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
@@ -123,7 +109,7 @@ describe('utility/DataViewStream', function() {
 	it('getInt32()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+65536)*-1};
-		let buffer = generateArrayBuffer(new Int32Array(length), genValue)
+		let buffer = ArrayBufferUtil.Generate(new Int32Array(length), genValue)
 		expect(buffer.byteLength).toBe(length * Int32Array.BYTES_PER_ELEMENT);
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
@@ -136,7 +122,7 @@ describe('utility/DataViewStream', function() {
 	it('getUint32()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return index+2147483648};
-		let buffer = generateArrayBuffer(new Uint32Array(length), genValue)
+		let buffer = ArrayBufferUtil.Generate(new Uint32Array(length), genValue)
 		expect(buffer.byteLength).toBe(length * Uint32Array.BYTES_PER_ELEMENT);
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());

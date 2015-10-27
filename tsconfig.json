@@ -27,12 +27,15 @@
         "source/hdf5/SuperBlock.ts",
         "source/hdf5/Utility.ts",
         "source/IArchive.ts",
+        "source/utility/ConstArrayBufferView.ts",
         "source/utility/DataViewStream.ts",
         "spec/_browser-check.spec.ts",
         "spec/alembic-core.spec.ts",
         "spec/alembic-factory.spec.ts",
+        "spec/constarraybufferview.spec.ts",
         "spec/dataviewstream.spec.ts",
-        "spec/hdf5-file.spec.ts"
+        "spec/hdf5-file.spec.ts",
+        "spec/utility.spec.ts"
     ],
     "exclude": [
         "lib/**/*"

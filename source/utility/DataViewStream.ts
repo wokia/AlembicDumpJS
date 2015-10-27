@@ -1,6 +1,8 @@
+
 class DataViewStream {
+
 	constructor(buffer:ArrayBuffer, endian?:DataViewStream.Endian, byteOffset?:number, byteLength?:number) {
-		if (byteLength) {
+		if ((byteLength)&&(byteLength > 0)) {
 			this.dataview = new DataView(buffer, byteOffset, byteLength);
 		}
 		else if (byteOffset) {
