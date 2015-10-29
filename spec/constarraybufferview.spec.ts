@@ -1,33 +1,47 @@
 /// <reference path="../typings/tsd.d.ts"/>
 
-describe('utility/ConstBufferArray', function() {
+describe('utility/ConstArrayBufferView', function() {
 
-	it('ConstBufferArray Defined?', function() {
-		expect(ConstBufferArrayView).toBeDefined();
+	it('ConstArrayBufferView Defined?', function() {
+		expect(ConstArrayBufferView).toBeDefined();
 	})
 
 	it('Correctly it can be created?', function() {
 		let buffer = ArrayBufferUtil.Generate(new Uint8Array(256), (index:number) => {return index});
 
 		{
-			let view = new ConstBufferArrayView(buffer);
+			let view = new ConstArrayBufferView(buffer);
 			expect(view).not.toBeNull();
 			expect(view.getByteOffset()).toBe(0);
 			expect(view.getBuffer()).toBe(buffer);
 		}
 
 		{
-			let view = new ConstBufferArrayView(buffer, 128, 128);
+			let view = new ConstArrayBufferView(buffer, 128, 128);
 			expect(view).not.toBeNull();
 			expect(view.getByteOffset()).toBe(128);
 			expect(view.getByteLength()).toBe(128);
 		}
 	})
 
+	it('Can create the New ConstArrayBufferView?', function() {
+		let buffer = ArrayBufferUtil.Generate(new Uint8Array(256), (index:number) => {return index});
+		let view = new ConstArrayBufferView(buffer);
+		expect(view).not.toBeNull();
+
+		{
+			let newview = view.NewView(128, 128);
+			expect(newview).not.toBeNull();
+			expect(newview.getBuffer()).toEqual(view.getBuffer());
+			expect(newview.getByteOffset()).toBe(128);
+			expect(newview.getByteLength()).toBe(128);
+		}
+	})
+
 	it('Can create the DataViewStream?', function() {
 		let buffer = ArrayBufferUtil.Generate(new Uint8Array(256), (index:number) => {return index;});
 
-		let view = new ConstBufferArrayView(buffer);
+		let view = new ConstArrayBufferView(buffer);
 		expect(view).not.toBeNull();
 
 		{
