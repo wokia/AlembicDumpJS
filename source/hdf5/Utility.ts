@@ -1,10 +1,10 @@
 module hdf5 {
 
-	export function getUint64(stream:DataViewStream): number {
+	export function readUint64(stream:DataViewStream): number {
 		var address:number = undefined;
 
-		var addressL = stream.getUint32();
-		var addressH = stream.getUint32();
+		var addressL = stream.readUint32();
+		var addressH = stream.readUint32();
 		if ((addressL != 0xFFFFFFFF)&&(addressH != 0xFFFFFFFF)) {
 			address = (addressH << 32)+ addressL;
 		}

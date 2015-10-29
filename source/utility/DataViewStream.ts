@@ -35,37 +35,37 @@ class DataViewStream {
 		return (this.littleEndian)? DataViewStream.Endian.Little : DataViewStream.Endian.Big;
 	}
 
-	getInt8():number {
+	readInt8():number {
 		var value = this.dataview.getInt8(this.position);
 		this.position += Int8Array.BYTES_PER_ELEMENT;
 		return value;
 	}
 
-	getUint8():number {
+	readUint8():number {
 		var value = this.dataview.getUint8(this.position);
 		this.position += Uint8Array.BYTES_PER_ELEMENT;
 		return value;
 	}
 
-	getInt16():number {
+	readInt16():number {
 		var value = this.dataview.getInt16(this.position, this.littleEndian);
 		this.position += Int16Array.BYTES_PER_ELEMENT;
 		return value;
 	}
 
-	getUint16():number {
+	readUint16():number {
 		var value = this.dataview.getUint16(this.position, this.littleEndian);
 		this.position += Uint16Array.BYTES_PER_ELEMENT;
 		return value;
 	}
 
-	getInt32():number {
+	readInt32():number {
 		var value = this.dataview.getInt32(this.position, this.littleEndian);
 		this.position += Int32Array.BYTES_PER_ELEMENT;
 		return value;
 	}
 
-	getUint32():number {
+	readUint32():number {
 		var value = this.dataview.getUint32(this.position, this.littleEndian);
 		this.position += Uint32Array.BYTES_PER_ELEMENT;
 		return value;

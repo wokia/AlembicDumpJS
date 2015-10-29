@@ -22,11 +22,11 @@ describe('hdf5/File', function() {
 
 		var stream = new DataViewStream(buffer, DataViewStream.Endian.Little);
 		[0x89, 0x48, 0x44, 0x46, 0x0d, 0x0a, 0x1a, 0x0a].forEach(function(value) {
-			expect(stream.getUint8()).toEqual(value);
+			expect(stream.readUint8()).toEqual(value);
 		})
 
 		// Super Block Version 2 のみ対象
-		expect(stream.getUint8()).toBe(2);
+		expect(stream.readUint8()).toBe(2);
 	})
 
 	it('hdf5.File can be generated from alembic_octopus.abc?', function() {

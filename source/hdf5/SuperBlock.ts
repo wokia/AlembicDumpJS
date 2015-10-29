@@ -18,14 +18,14 @@ module hdf5 {
 			// SIGNETURE を読み飛ばす.
 			var stream = new DataViewStream(buffer, hdf5.ENDIANNESS, SuperBlock.SIGNETURE.length);
 
-			var superBlockVersion = stream.getUint8();
+			var superBlockVersion = stream.readUint8();
 			if (superBlockVersion != 2) {
 				return ;
 			}
 
-			this.sizeOfOffsets = stream.getUint8();
-			this.sizeOfLengths = stream.getUint8();
-			this.fileConsistencyFlags = stream.getUint8();
+			this.sizeOfOffsets = stream.readUint8();
+			this.sizeOfLengths = stream.readUint8();
+			this.fileConsistencyFlags = stream.readUint8();
 
 			this.buffer = buffer.slice(0, ((SuperBlock.SIGNETURE.length) + 4 + (8*4) + 4));
 		}
@@ -35,7 +35,7 @@ module hdf5 {
 		}
 
 		getRootGroupObjectHeaderAddress():number {
-			return getUint64(new DataViewStream(this.buffer, ENDIANNESS, ((SuperBlock.SIGNETURE.length) + 4 + (8*3))));
+			return readUint64(new DataViewStream(this.buffer, ENDIANNESS, ((SuperBlock.SIGNETURE.length) + 4 + (8*3))));
 		}
 	}
 

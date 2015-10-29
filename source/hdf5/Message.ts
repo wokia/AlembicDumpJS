@@ -11,12 +11,12 @@ module hdf5 {
 		constructor(buffer:ArrayBuffer, containsCreationOrder:boolean) {
 			var stream = new DataViewStream(buffer, hdf5.ENDIANNESS);
 
-			this.type = stream.getUint8();
-			this.size = stream.getUint16();
-			this.flags = stream.getUint8();
+			this.type = stream.readUint8();
+			this.size = stream.readUint16();
+			this.flags = stream.readUint8();
 
 			if (containsCreationOrder) {
-				this.creationOrder = stream.getUint16();
+				this.creationOrder = stream.readUint16();
 			}
 
 			this.body = buffer.slice(stream.getPosition(), this.size);

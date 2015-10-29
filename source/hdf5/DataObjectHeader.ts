@@ -16,12 +16,12 @@ module hdf5 {
 			// SIGNETURE を読み飛ばす.
 			var stream = new DataViewStream(buffer, hdf5.ENDIANNESS, DataObjectHeader.SIGNETURE.length);
 
-			var version = stream.getUint8();
+			var version = stream.readUint8();
 			if (version != 2) {
 				return ;
 			}
 
-			this.flags = stream.getUint8();
+			this.flags = stream.readUint8();
 
 			if ((this.flags & DataObjectHeader.Flag.StoredAccessModificationChangeBirthTimes)!= 0) {
 				stream.skipBytes(4 * 4);
@@ -33,10 +33,10 @@ module hdf5 {
 
 			var sizeOfChunk = (function():number {
 				switch (this.flags & DataObjectHeader.Flag.SizeOfChunkFieldBytesMask) {
-				case 0:		return stream.getUint8();
-				case 1:		return stream.getUint16();
-				case 2:		return stream.getUint32();
-				case 3:		return getUint64(stream);
+				case 0:		return stream.readUint8();
+				case 1:		return stream.readUint16();
+				case 2:		return stream.readUint32();
+				case 3:		return readUint64(stream);
 				}
 			})();
 

@@ -54,7 +54,7 @@ describe('utility/DataViewStream', function() {
 		expect(stream.getPosition()).toBe(length);
 	})
 
-	it('getInt8()', function() {
+	it('readInt8()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+1)*-1};
 		let buffer = ArrayBufferUtil.Generate(new Int8Array(length), genValue)
@@ -62,12 +62,12 @@ describe('utility/DataViewStream', function() {
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getInt8()).toBe(genValue(cnt));
+			expect(stream.readInt8()).toBe(genValue(cnt));
 			expect(stream.getPosition()).toBe((cnt+1)*Int8Array.BYTES_PER_ELEMENT);
 		}
 	})
 
-	it('getUint8()', function() {
+	it('readUint8()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return index+128};
 		let buffer = ArrayBufferUtil.Generate(new Uint8Array(length), genValue)
@@ -75,12 +75,12 @@ describe('utility/DataViewStream', function() {
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getUint8()).toBe(genValue(cnt));
+			expect(stream.readUint8()).toBe(genValue(cnt));
 			expect(stream.getPosition()).toBe((cnt+1)*Uint8Array.BYTES_PER_ELEMENT);
 		}
 	})
 
-	it('getInt16()', function() {
+	it('readInt16()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+256)*-1};
 		let buffer = ArrayBufferUtil.Generate(new Int16Array(length), genValue)
@@ -88,12 +88,12 @@ describe('utility/DataViewStream', function() {
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getInt16()).toBe(genValue(cnt));
+			expect(stream.readInt16()).toBe(genValue(cnt));
 			expect(stream.getPosition()).toBe((cnt+1)*Int16Array.BYTES_PER_ELEMENT);
 		}
 	})
 
-	it('getUint16()', function() {
+	it('readUint16()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return index+32768};
 		let buffer = ArrayBufferUtil.Generate(new Uint16Array(length), genValue)
@@ -101,12 +101,12 @@ describe('utility/DataViewStream', function() {
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getUint16()).toBe(genValue(cnt));
+			expect(stream.readUint16()).toBe(genValue(cnt));
 			expect(stream.getPosition()).toBe((cnt+1)*Uint16Array.BYTES_PER_ELEMENT);
 		}
 	})
 
-	it('getInt32()', function() {
+	it('readInt32()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return (index+65536)*-1};
 		let buffer = ArrayBufferUtil.Generate(new Int32Array(length), genValue)
@@ -114,12 +114,12 @@ describe('utility/DataViewStream', function() {
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getInt32()).toBe(genValue(cnt));
+			expect(stream.readInt32()).toBe(genValue(cnt));
 			expect(stream.getPosition()).toBe((cnt+1)*Int32Array.BYTES_PER_ELEMENT);
 		}
 	})
 
-	it('getUint32()', function() {
+	it('readUint32()', function() {
 		let length = 16;
 		let genValue = (index:number) => {return index+2147483648};
 		let buffer = ArrayBufferUtil.Generate(new Uint32Array(length), genValue)
@@ -127,7 +127,7 @@ describe('utility/DataViewStream', function() {
 
 		let stream = new DataViewStream(buffer, DataViewStream.getNativeEndianness());
 		for (let cnt=0; cnt<length; ++cnt) {
-			expect(stream.getUint32()).toBe(genValue(cnt));
+			expect(stream.readUint32()).toBe(genValue(cnt));
 			expect(stream.getPosition()).toBe((cnt+1)*Uint32Array.BYTES_PER_ELEMENT);
 		}
 	})
