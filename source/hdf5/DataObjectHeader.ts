@@ -5,16 +5,16 @@ module hdf5 {
 		flags:number = 0;
 		sizeOfChunk:number = 0;
 
-		buffer:ArrayBuffer = null;
-		bufferOfChunk:ArrayBuffer = null;
+		buffer:ConstArrayBufferView = null;
+		bufferOfChunk:ConstArrayBufferView = null;
 
-		constructor(buffer:ArrayBuffer) {
+		constructor(buffer:ConstArrayBufferView) {
 			if (!matchSigneture(buffer, 0, DataObjectHeader.SIGNETURE)) {
 				return ;
 			}
 
 			// SIGNETURE を読み飛ばす.
-			var stream = new DataViewStream(buffer, hdf5.ENDIANNESS, DataObjectHeader.SIGNETURE.length);
+			var stream = buffer.NewDataViewStream(hdf5.ENDIANNESS, DataObjectHeader.SIGNETURE.length);
 
 			var version = stream.readUint8();
 			if (version != 2) {
@@ -22,7 +22,6 @@ module hdf5 {
 			}
 
 			this.flags = stream.readUint8();
-
 			if ((this.flags & DataObjectHeader.Flag.StoredAccessModificationChangeBirthTimes)!= 0) {
 				stream.skipBytes(4 * 4);
 			}
@@ -41,14 +40,14 @@ module hdf5 {
 			})();
 
 			this.buffer = buffer;
-			this.bufferOfChunk = buffer.slice(stream.getPosition(), sizeOfChunk);
+			this.bufferOfChunk = buffer.NewView(stream.getPosition(), sizeOfChunk);
 		}
 
 		valid(): boolean {
 			return ((this.buffer != null)&&(this.bufferOfChunk != null));
 		}
 
-		getChunk():ArrayBuffer {
+		getChunk():ConstArrayBufferView {
 			return this.bufferOfChunk;
 		}
 

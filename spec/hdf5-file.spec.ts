@@ -30,7 +30,7 @@ describe('hdf5/File', function() {
 	})
 
 	it('hdf5.File can be generated from alembic_octopus.abc?', function() {
-		let file = new hdf5.File(<ArrayBuffer>request.response);
+		let file = new hdf5.File(new ConstArrayBufferView(<ArrayBuffer>request.response));
 		expect(file).not.toBeNull();
 		expect(file.valid());
 	})
@@ -39,7 +39,7 @@ describe('hdf5/File', function() {
 		var file:hdf5.File = null;
 
 		beforeAll(function() {
-			file = new hdf5.File(<ArrayBuffer>request.response);
+			file = new hdf5.File(new ConstArrayBufferView(<ArrayBuffer>request.response));
 		})
 
 		it('RootNode Group can be obtained from the hdf5.File?', function() {

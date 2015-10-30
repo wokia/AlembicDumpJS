@@ -3,17 +3,17 @@ module hdf5 {
 	export const ENDIANNESS = DataViewStream.Endian.Little;
 
 	export class File {
-		buffer:ArrayBuffer = null;
+		buffer:ConstArrayBufferView = null;
 		superblock:SuperBlock = null;
 		rootGroup:Group = null;
 
-		constructor(buffer:ArrayBuffer) {
+		constructor(buffer:ConstArrayBufferView) {
 			var superblock = new SuperBlock(buffer);
 			if (!superblock.valid()) {
 				return ;
 			}
 
-			var rootGroup = new Group(buffer.slice(superblock.getRootGroupObjectHeaderAddress()));
+			var rootGroup = new Group(buffer.NewView(superblock.getRootGroupObjectHeaderAddress()));
 			if (!rootGroup.valid()) {
 				return ;
 			}

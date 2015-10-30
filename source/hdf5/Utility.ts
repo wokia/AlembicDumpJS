@@ -12,8 +12,8 @@ module hdf5 {
 		return address;
 	}
 
-	export function matchSigneture(buffer:ArrayBuffer, offset:number, signeture:Uint8Array) {
-		var array = new Uint8Array(buffer, offset, signeture.length);
+	export function matchSigneture(buffer:ConstArrayBufferView, offset:number, signeture:Uint8Array) {
+		var array = buffer.NewUint8Array(offset, signeture.length);
 		if (signeture.length != array.length) {
 			return false;
 		}

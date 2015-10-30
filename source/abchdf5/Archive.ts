@@ -5,7 +5,7 @@ module alembic {
 			file:hdf5.File;
 			filename:string;
 
-			constructor(buffer:ArrayBuffer, filename:string) {
+			constructor(buffer:ConstArrayBufferView, filename:string) {
 				this.file = new hdf5.File(buffer);
 				this.filename = filename;
 			}

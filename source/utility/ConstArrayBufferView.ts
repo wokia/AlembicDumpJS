@@ -19,18 +19,25 @@ class ConstArrayBufferView {
 		return this.buffer;
 	}
 
-	NewView(byteOffset:number, byteLength:number = 0):ConstArrayBufferView {
+	private calculateOffsetAndLength(byteOffset:number, byteLength:number):{byteOffset:number, byteLength:number} {
 		byteOffset = (this.byteOffset + byteOffset);
 		byteLength = (byteLength > 0)? byteLength : (Math.min((this.byteLength - byteOffset), 0));
+		return {byteOffset:byteOffset, byteLength:byteLength};
+	}
 
-		return new ConstArrayBufferView(this.buffer, byteOffset, byteLength);
+	NewView(byteOffset:number, byteLength:number = 0):ConstArrayBufferView {
+		var result = this.calculateOffsetAndLength(byteOffset, byteLength);
+		return new ConstArrayBufferView(this.buffer, result['byteOffset'], result['byteLength']);
+	}
+
+	NewUint8Array(byteOffset:number, byteLength:number):Uint8Array {
+		var result = this.calculateOffsetAndLength(byteOffset, byteLength);
+		return new Uint8Array(this.buffer, result['byteOffset'], result['byteLength']);
 	}
 
 	NewDataViewStream(endian:DataViewStream.Endian =DataViewStream.Endian.Big, byteOffset:number =0, byteLength:number =0):DataViewStream {
-		byteOffset = (this.byteOffset + byteOffset);
-		byteLength = (byteLength > 0)? byteLength : (Math.min((this.byteLength - byteOffset), 0));
-
-		return new DataViewStream(this.buffer, endian, byteOffset, byteLength);
+		var result = this.calculateOffsetAndLength(byteOffset, byteLength);
+		return new DataViewStream(this.buffer, endian, result['byteOffset'], result['byteLength']);
 	}
 
 	buffer:ArrayBuffer;

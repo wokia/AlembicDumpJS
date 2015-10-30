@@ -6,10 +6,10 @@ module hdf5 {
 		flags:number = 0;
 		creationOrder:number = undefined;
 
-		body:ArrayBuffer = null;
+		body:ConstArrayBufferView = null;
 
-		constructor(buffer:ArrayBuffer, containsCreationOrder:boolean) {
-			var stream = new DataViewStream(buffer, hdf5.ENDIANNESS);
+		constructor(buffer:ConstArrayBufferView, containsCreationOrder:boolean) {
+			var stream = buffer.NewDataViewStream(hdf5.ENDIANNESS);
 
 			this.type = stream.readUint8();
 			this.size = stream.readUint16();
@@ -19,7 +19,7 @@ module hdf5 {
 				this.creationOrder = stream.readUint16();
 			}
 
-			this.body = buffer.slice(stream.getPosition(), this.size);
+			this.body = buffer.NewView(stream.getPosition(), this.size);
 
 			//console.log(this.type.toString(16));
 			//console.log(this.size);

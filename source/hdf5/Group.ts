@@ -4,8 +4,7 @@ module hdf5 {
 	export class Group {
 		dataObjectHeader:DataObjectHeader = null;
 
-
-		constructor(buffer:ArrayBuffer) {
+		constructor(buffer:ConstArrayBufferView) {
 			var dataObjectHeader = new DataObjectHeader(buffer);
 			if (!dataObjectHeader.valid()) {
 				return ;
